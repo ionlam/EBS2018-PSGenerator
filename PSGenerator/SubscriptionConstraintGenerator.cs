@@ -11,8 +11,8 @@
       {
          Field = field;
          var frequencyMinPercent = field.FieldFrequencyMinPercent ?? 100;
-         RandomValueWithTarget = new RandomValueWithTarget(frequencyMinPercent, randomCount);
-         var newRandomCount = RandomValueWithTarget.GetTargetCount();
+         var newRandomCount = new RandomValueWithTarget(frequencyMinPercent, randomCount).GetRandomNewCount();
+         RandomValueWithTarget = new RandomValueWithTarget(frequencyMinPercent, newRandomCount);
          RandomOperator = field.GetRandomOperator(newRandomCount);
          RandomValue = field.GetRandomValue(newRandomCount);
       }

@@ -39,6 +39,11 @@ namespace PSGenerator
          return (int)Math.Ceiling(RandomCount * TargetValueMinPercent / 100);
       }
 
+      public int GetRandomNewCount()
+      {
+         return Random.Next(GetTargetCount(), RandomCount + 1);
+      }
+
       void CheckCounters()
       {
          if (TotalCount > 0) return;
