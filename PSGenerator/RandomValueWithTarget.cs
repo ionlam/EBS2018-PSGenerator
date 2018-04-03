@@ -6,19 +6,26 @@ namespace PSGenerator
    {
       Random Random { get; } = RandomUtil.NewRandom();
       double TargetValueMinPercent { get; }
-      int RandomCount { get; }
+      int RandomTotalCount { get; }
+      int RandomTargetCount { get; }
       int TotalCount { get; set; }
       int TargetCount { get; set; }
 
-      public RandomValueWithTarget(double targetValueMinPercent, int randomCount)
+      public RandomValueWithTarget(double targetValueMinPercent, int randomTotalCount)
       {
          TargetValueMinPercent = targetValueMinPercent;
-         RandomCount = randomCount;
+         RandomTotalCount = randomTotalCount;
+         var minTargetCount = (int)Math.Ceiling(RandomTotalCount * TargetValueMinPercent / 100);
+         RandomTargetCount = Random.Next(minTargetCount, RandomTotalCount + 1);
       }
 
       public bool NextTargetHit()
       {
-         CheckCounters();
+         if (TotalCount == 0)
+         {
+            TotalCount = RandomTotalCount;
+            TargetCount = RandomTargetCount;
+         }
          if (Random.Next(TotalCount) < TargetCount)
          {
             TotalCount--;
@@ -34,21 +41,9 @@ namespace PSGenerator
          return !NextTargetHit();
       }
 
-      public int GetTargetCount()
+      public int GetRandomTargetCount()
       {
-         return (int)Math.Ceiling(RandomCount * TargetValueMinPercent / 100);
-      }
-
-      public int GetNewRandomCount()
-      {
-         return Random.Next(GetTargetCount(), RandomCount + 1);
-      }
-
-      void CheckCounters()
-      {
-         if (TotalCount > 0) return;
-         TotalCount = RandomCount;
-         TargetCount = GetTargetCount();
+         return RandomTargetCount;
       }
    }
 }
