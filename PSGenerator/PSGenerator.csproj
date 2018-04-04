@@ -92,7 +92,6 @@
     <None Include="Samples\subscription.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="About\License.txt" />
     <Content Include="About\Readme.txt" />
     <Content Include="Samples\publications.txt" />
     <Content Include="Samples\subscriptions.txt" />
